@@ -154,12 +154,12 @@ def run_draw_anagram_on_matrix(word_limit: int = 3, which: str = 'both'):
         draw_anagram_on_matrix(word, which=which, animate=True)
 
 
-def run_math_funs_game_of_life(generations: int = 100, b_rule: Optional[List[int]] = None, s_rule: Optional[List[int]] = None):
+def run_math_funs_game_of_life(generations: int = 100, delay_sec: float = 0.1):
     for func in random.sample(MATH_OPERATIONS, len(MATH_OPERATIONS)):
         func = pick_largest_graph(func)
         draw_matrix_on_board(func)
         time.sleep(3)
-        game_of_life_totalistic_sim(initial_board=func, generations=generations, delay_sec=0.1, which='both')
+        game_of_life_totalistic_sim(initial_board=func, generations=generations, delay_sec=delay_sec, which='both')
 
 def show_random_graphs(num_graphs: int = 5, delay_sec: float = 2.0, which: str = 'both'):
     log(f"show_random_graphs: start num_graphs={num_graphs} delay_sec={delay_sec} which={which}")
@@ -174,6 +174,6 @@ def show_random_graphs(num_graphs: int = 5, delay_sec: float = 2.0, which: str =
 
 
 try:
-    run_hpp_with_math(density=0.3, timesteps=300, delay_sec=0.05, graphs_count=3)
+    run_outer_totalistic_simulation(initial_state=STARTING_STATES_GOF['lwss'], b_rule=game_of_life_rules['Original']['B'], s_rule=game_of_life_rules['Original']['S'], timesteps=500, delay_sec=0.001)
 finally:
     reset_modules()

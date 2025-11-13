@@ -1,11 +1,14 @@
 import subprocess
 import re
 import serial
+import serial.tools.list_ports
 from typing import List, Optional, Tuple
+import sys
 
 WIDTH = 9
 HEIGHT = 34
 verbose = True
+linux = bool(sys.platform == "linux")
 
 class VerboseLogger:
     def __init__(self, verbose=False):
@@ -14,14 +17,34 @@ class VerboseLogger:
         if self.verbose:
             print(*args, **kwargs)
 
+def find_matching_ports_windows(target_description):
+    """Finds COM ports with descriptions containing the target_description."""
+    matching_ports = {
+        'left': '',
+        'right': ''
+    }
+    for port in serial.tools.list_ports.comports():
+        if target_description in port.description:
+            # Check the device name, not the description
+            if port.device == 'COM3':
+                matching_ports['left'] = port.device
+            elif port.device == 'COM4':
+                matching_ports['right'] = port.device
+    return matching_ports
+
 log = VerboseLogger()
 log.verbose = verbose
 
 modules = {'left': None, 'right': None}
 
 # --- HARDWARE CONSTANTS ---
-RIGHT_PCI_PATH = 'pci-0000:c2:00.3-usb-0:3.3:1.0'
-LEFT_PCI_PATH = 'pci-0000:c2:00.3-usb-0:4.2:1.0'
+RIGHT_PCI_PATH_WINDOWS = ''
+LEFT_PCI_PATH_WINDOWS = ''
+RIGHT_PCI_PATH_LINUX = 'pci-0000:c2:00.3-usb-0:3.3:1.0'
+LEFT_PCI_PATH_LINUX = 'pci-0000:c2:00.3-usb-0:4.2:1.0'
+RIGHT_PCI_PATH = RIGHT_PCI_PATH_LINUX if linux else RIGHT_PCI_PATH_WINDOWS
+LEFT_PCI_PATH = LEFT_PCI_PATH_LINUX if linux else LEFT_PCI_PATH_WINDOWS
+
 DEFAULT_FONT_PATH = "/usr/share/fonts/TTF/DejaVuSansMono.ttf"
 
 # --- COMMAND CONSTANTS ---
@@ -57,6 +80,16 @@ def get_module_paths():
             e.g., {'left': '/dev/ttyACM1', 'right': '/dev/ttyACM0'}
             Values will be None if a path is not found.
     """
+    if not linux:
+        if modules['left'] is not None and modules['right'] is not None:
+            return modules
+        else:
+            found_ports = find_matching_ports_windows("USB Serial Device")
+            modules['left'] = found_ports['left']
+            modules['right'] = found_ports['right']
+            log(f"get_module_paths: found ports -> {modules}")
+            return modules
+
     if modules['left'] is not None and modules['right'] is not None:
         log("get_module_paths: using cached module paths", modules)
         return modules
@@ -359,5 +392,17 @@ def reset_modules():
     clear_graph()
     stop_animation()
     
+def output_ports():
+    """
+    Outputs the current module paths for debugging.
+    """
+    for port in serial.tools.list_ports.comports():
+        print(f"Device: {port.device}")
+        print(f"  Name: {port.name}")
+        print(f"  Description: {port.description}")
+        print(f"  HWID: {port.hwid}")
+        print(f"  VID: {port.vid}")
+        print(f"  PID: {port.pid}")
+                  
 
 

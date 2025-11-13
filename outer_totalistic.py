@@ -22,7 +22,8 @@ STARTING_STATES_GOF = {
         [17, 2], [18, 4], [19, 1], [19, 2], [19, 5], [19, 6], [19, 7]
     ]),
     "block": coordinates_to_matrix([[17, 3], [17, 4], [18, 3], [18, 4]]),
-    "beehive": coordinates_to_matrix([[17, 3], [17, 4], [18, 2], [18, 5], [19, 3], [19, 4]])
+    "beehive": coordinates_to_matrix([[17, 3], [17, 4], [18, 2], [18, 5], [19, 3], [19, 4]]),
+    "r_pentomino": coordinates_to_matrix([[17, 4], [17, 5], [18, 3], [18, 4], [19, 4]]),
 }
 
 
