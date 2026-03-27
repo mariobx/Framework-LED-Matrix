@@ -294,7 +294,6 @@ def coordinates_to_matrix(coordinates: List[Tuple[int, int]] | List[List[int]]) 
     Returns:
         A 34x9 2D matrix (List[List[int]]).
     """
-    log("coordinates_to_matrix: creating new 34x9 matrix")
     # 1. Create the initial board (all 0s)
     matrix = [[0 for _ in range(WIDTH)] for _ in range(HEIGHT)]
     
@@ -305,7 +304,6 @@ def coordinates_to_matrix(coordinates: List[Tuple[int, int]] | List[List[int]]) 
             matrix[r][c] = 1  # 1 = live
             pixels_seeded += 1
     
-    log(f"coordinates_to_matrix: seeded {pixels_seeded} pixels.")
     return matrix
 
 
