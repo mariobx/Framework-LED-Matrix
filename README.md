@@ -40,12 +40,14 @@ Run the background runner (screensaver mode).
 ---
 
 ### `text`
-* **`vertical <text>`**
+* **`vertical <text>`**: Render text vertically.
+    * `<text>`: The text string to render.
     * `--font-size <int>`: Force a specific font size (default: `auto`).
     * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
     * `--row-offset <int>`: Row offset from the top (default: `0`).
     * `--hold <float>`: Seconds to hold the text on screen (default: `0`).
-* **`horizontal <text>`**
+* **`horizontal <text>`**: Render text horizontally.
+    * `<text>`: The text string to render.
     * `--font-size <int>`: Force a specific font size (default: `auto`).
     * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
     * `--x-offset <int>`: Horizontal scroll offset (default: `0`).
@@ -55,7 +57,8 @@ Run the background runner (screensaver mode).
 ---
 
 ### `anagram`
-* **`draw <word>`**
+* **`draw <word>`**: Find and draw anagrams for a word.
+    * `<word>`: The word to find anagrams for.
     * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
     * `--no-animate`: Disable animation between words.
 
@@ -69,6 +72,8 @@ Run the background runner (screensaver mode).
 * **`bml-local`**: Run BML traffic model locally in a Matplotlib window.
     * `--density <float>`: Particle density 0.0 to 1.0 (default: `0.5`).
     * `--steps <int>`: Simulation steps (default: `500`).
+    * `--density <float>`: Car density 0.0 to 1.0 (default: `0.35`).
+    * `--steps <int>`: Total half-steps to simulate (default: `500`).
 * **`hpp`**: Run Hardy-Pomeau-Pazzis lattice gas (particle collision simulation).
     * `--density <float>`: Particle density 0.0 to 1.0 (default: `0.5`).
     * `--steps <int>`: Simulation steps (default: `500`).
@@ -88,13 +93,12 @@ Run the background runner (screensaver mode).
     * `--still-max <int>`: Steps to detect still life (default: `10`).
     * `--empty-max <int>`: Steps to detect empty board (default: `5`).
 * **`gof`**: Run Conway's Game of Life (B3/S23).
-    
     * `--board <choice>`: Initial state: `random` or named pattern (`glider`, `acorn`, etc.).
     * `--steps <int>`: Simulation steps (default: `200`).
     * `--delay <float>`: Delay in seconds between frames (default: `0.1`).
     * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
 * **`inner`**: Run Inner-Totalistic CA (Wolfram NKS style).
-    * `<rule> <int>`: The rule number (e.g., `777`).
+    * `<rule>`: The rule number (integer, e.g., `777`).
     * `--steps <int>`: Simulation steps (default: `200`).
     * `--delay <float>`: Delay in seconds between frames (default: `0.1`).
 * **`random-grey`**: Display hardware-level greyscale noise.
@@ -123,3 +127,8 @@ Run the background runner (screensaver mode).
 * **`plot <function>`**: Plot a function locally and on the matrix.
     * `<function>`: Predefined function: `sin`, `cos`, `tan`, `exp`, `log`, `tanh`, etc.
     * `--points <int>`: Number of points to plot (default: `500`).
+
+---
+
+## Testing & Development
+* `./cli.py --test`: Run a built-in test suite that cycles through various commands to verify hardware and software functionality.
