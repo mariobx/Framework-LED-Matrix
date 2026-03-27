@@ -96,14 +96,12 @@ import time
 import numpy as np
 from typing import List, Optional
 
-from led_matrix_commands import draw_matrix_on_board
-
 # --- Import All Necessary Functions ---
-# We import everything here to create a single CLI entry point.
+# We import from the new package structure.
 
 try:
     # LED Matrix Core Commands
-    from led_matrix_commands import (
+    from core.led_commands import (
         log,
         reset_modules,
         get_firmware_version,
@@ -114,34 +112,31 @@ try:
         output_ports,
         WIDTH,
         HEIGHT,
-        coordinates_to_matrix
+        coordinates_to_matrix,
+        draw_matrix_on_board
     )
 
     # Text Rendering
-    from text import draw_text_vertical, draw_text_horizontal
+    from utils.text_rendering import draw_text_vertical, draw_text_horizontal
 
     # Anagrams
-    from anagrams import draw_anagram_on_matrix
+    from utils.anagrams import draw_anagram_on_matrix
 
     # Math Functions
-    # We need plot_function for local plotting and the dicts for GoL boards
-    from mathFunctions import (
+    from core.math_engine import (
         plot_function, 
         MATH_OPERATIONS, 
         pick_largest_graph, 
-        REGULAR_OPERATIONS,  # User's change
-        create_graph_with_horizontal_x_axis, # User's change
-        create_graph_with_vertical_x_axis  # User's change
+        REGULAR_OPERATIONS
     )
     
     # Simulation Models
-    from BihamMiddletonLevineTrafficModel import run_bml, show_bml_local_animation
-    from HardyPomeauPazzis import run_hpp_simulation, create_hpp_board_np
-    from outer_totalistic import STARTING_STATES_GOF, game_of_life_rules
+    from simulations.BihamMiddletonLevineTrafficModel import run_bml, show_bml_local_animation
+    from simulations.HardyPomeauPazzis import run_hpp_simulation, create_hpp_board_np
+    from simulations.outer_totalistic import STARTING_STATES_GOF, game_of_life_rules
     
     # Runtime Simulation Functions
-    # These are the high-level functions we'll primarily call.
-    from runtime import (
+    from apps.runtime import (
         run_hpp_with_math,
         run_outer_totalistic_simulation,
         game_of_life_totalistic_sim,
@@ -151,17 +146,16 @@ try:
         run_anagrams_game_of_life,
         run_draw_anagram_on_matrix,
         run_math_funs_game_of_life,
-        run_math_funs_game_of_life,
         show_random_graphs
     )
     
     # Background Runner
-    from background_runner import run_background_mode
+    from apps.background_runner import run_background_mode
 
 except ImportError as e:
     print(f"Error: Failed to import a necessary module: {e}", file=sys.stderr)
-    print("Please ensure all .py files (led_matrix_commands.py, runtime.py, etc.)", file=sys.stderr)
-    print("are in the same directory as this cli.py script.", file=sys.stderr)
+    print("Please ensure you are running cli.py from the root directory", file=sys.stderr)
+    print("of the graph_functions_on_matrix project.", file=sys.stderr)
     sys.exit(1)
 except Exception as e:
     print(f"An unexpected error occurred during import: {e}", file=sys.stderr)
