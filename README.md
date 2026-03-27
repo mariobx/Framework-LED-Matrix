@@ -130,5 +130,5 @@ Run the background runner (screensaver mode).
 
 ---
 
-## Testing & Development
+## Testing
 * `./cli.py --test`: Run a built-in test suite that cycles through various commands to verify hardware and software functionality.
