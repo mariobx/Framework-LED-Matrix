@@ -67,8 +67,9 @@ Run the background runner (screensaver mode).
     * `--steps <int>`: Total half-steps to simulate (default: `500`).
     * `--delay <float>`: Delay in seconds between frames (default: `0.05`).
 * **`bml-local`**: Run BML traffic model locally in a Matplotlib window.
+    * `--density <float>`: Particle density 0.0 to 1.0 (default: `0.5`).
+    * `--steps <int>`: Simulation steps (default: `500`).
 * **`hpp`**: Run Hardy-Pomeau-Pazzis lattice gas (particle collision simulation).
-    
     * `--density <float>`: Particle density 0.0 to 1.0 (default: `0.5`).
     * `--steps <int>`: Simulation steps (default: `500`).
     * `--delay <float>`: Delay in seconds between frames (default: `0.05`).
