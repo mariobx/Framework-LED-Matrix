@@ -1,4 +1,4 @@
-from core.led_commands import log, draw_matrix_on_board, WIDTH, HEIGHT
+from framework_led_matrix.core.led_commands import log, draw_matrix_on_board, WIDTH, HEIGHT
 from PIL import Image, ImageDraw, ImageFont
 
 

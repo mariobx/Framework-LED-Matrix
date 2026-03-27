@@ -101,7 +101,7 @@ from typing import List, Optional
 
 try:
     # LED Matrix Core Commands
-    from core.led_commands import (
+    from framework_led_matrix.core.led_commands import (
         log,
         reset_modules,
         get_firmware_version,
@@ -117,13 +117,13 @@ try:
     )
 
     # Text Rendering
-    from utils.text_rendering import draw_text_vertical, draw_text_horizontal
+    from framework_led_matrix.utils.text_rendering import draw_text_vertical, draw_text_horizontal
 
     # Anagrams
-    from utils.anagrams import draw_anagram_on_matrix
+    from framework_led_matrix.utils.anagrams import draw_anagram_on_matrix
 
     # Math Functions
-    from core.math_engine import (
+    from framework_led_matrix.core.math_engine import (
         plot_function, 
         MATH_OPERATIONS, 
         pick_largest_graph, 
@@ -131,12 +131,12 @@ try:
     )
     
     # Simulation Models
-    from simulations.BihamMiddletonLevineTrafficModel import run_bml, show_bml_local_animation
-    from simulations.HardyPomeauPazzis import run_hpp_simulation, create_hpp_board_np
-    from simulations.outer_totalistic import STARTING_STATES_GOF, game_of_life_rules
+    from framework_led_matrix.simulations.BihamMiddletonLevineTrafficModel import run_bml, show_bml_local_animation
+    from framework_led_matrix.simulations.HardyPomeauPazzis import run_hpp_simulation, create_hpp_board_np
+    from framework_led_matrix.simulations.outer_totalistic import STARTING_STATES_GOF, game_of_life_rules
     
     # Runtime Simulation Functions
-    from apps.runtime import (
+    from framework_led_matrix.apps.runtime import (
         run_hpp_with_math,
         run_outer_totalistic_simulation,
         game_of_life_totalistic_sim,
@@ -150,7 +150,7 @@ try:
     )
     
     # Background Runner
-    from apps.background_runner import run_background_mode
+    from framework_led_matrix.apps.background_runner import run_background_mode
 
 except ImportError as e:
     print(f"Error: Failed to import a necessary module: {e}", file=sys.stderr)

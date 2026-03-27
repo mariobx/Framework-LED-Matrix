@@ -1,6 +1,6 @@
 import numpy as np
 import cellpylib as cpl
-from core.led_commands import log, WIDTH, HEIGHT
+from framework_led_matrix.core.led_commands import log, WIDTH, HEIGHT
 
 
 

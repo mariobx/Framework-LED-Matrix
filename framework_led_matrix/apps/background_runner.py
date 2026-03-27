@@ -9,8 +9,8 @@ import sys
 from typing import List
 
 try:
-    from core.led_commands import log, reset_modules
-    from apps.runtime import (
+    from framework_led_matrix.core.led_commands import log, reset_modules
+    from framework_led_matrix.apps.runtime import (
         game_of_life_totalistic_sim,
         run_outer_totalistic_simulation,
         run_inner_totalistic_simulation,
@@ -20,7 +20,7 @@ try:
         show_random_graphs,
         random_greyscale_animation
     )
-    from simulations.HardyPomeauPazzis import run_hpp_simulation
+    from framework_led_matrix.simulations.HardyPomeauPazzis import run_hpp_simulation
 except ImportError as e:
     print(f"Background Runner Import Error: {e}")
     sys.exit(1)

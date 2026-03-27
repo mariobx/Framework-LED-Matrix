@@ -16,7 +16,7 @@ import numpy as np
 import time
 import random
 from typing import List, Optional
-from core.led_commands import log, clear_graph, WIDTH, HEIGHT, draw_matrix_on_board, reset_modules
+from framework_led_matrix.core.led_commands import log, clear_graph, WIDTH, HEIGHT, draw_matrix_on_board, reset_modules
 
 # --- HPP Particle States (Bitmasks) ---
 # A cell's state is the bitwise OR of the particles it contains.

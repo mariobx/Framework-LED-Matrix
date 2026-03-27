@@ -1,6 +1,6 @@
 import numpy as np
 import cellpylib as cpl
-from core.led_commands import log, WIDTH, HEIGHT, coordinates_to_matrix
+from framework_led_matrix.core.led_commands import log, WIDTH, HEIGHT, coordinates_to_matrix
 
 STARTING_STATES_GOF = {
     "blinker": coordinates_to_matrix([[17, 3], [17, 4], [17, 5]]),

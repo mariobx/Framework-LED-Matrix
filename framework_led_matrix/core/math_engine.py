@@ -1,7 +1,7 @@
 import numpy as np
 import math
 from typing import Callable, List
-from core.led_commands import log, WIDTH, HEIGHT, draw_matrix_on_board
+from framework_led_matrix.core.led_commands import log, WIDTH, HEIGHT, draw_matrix_on_board
 import matplotlib.pyplot as plt
 
 

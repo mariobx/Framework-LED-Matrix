@@ -2,7 +2,7 @@ import cellpylib as cpl
 import numpy as np
 import time
 import random
-from core.led_commands import log, clear_graph, WIDTH, HEIGHT, draw_greyscale_on_board
+from framework_led_matrix.core.led_commands import log, clear_graph, WIDTH, HEIGHT, draw_greyscale_on_board
 from typing import List
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap

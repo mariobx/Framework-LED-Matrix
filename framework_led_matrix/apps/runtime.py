@@ -1,13 +1,13 @@
-from core.led_commands import log, draw_greyscale_on_board, set_led, clear_graph, start_animation, stop_animation, draw_matrix_on_board, reset_modules, WIDTH, HEIGHT, coordinates_to_matrix
-from simulations.BihamMiddletonLevineTrafficModel import run_bml
-from utils.anagrams import draw_anagram_on_matrix, anagrams
+from framework_led_matrix.core.led_commands import log, draw_greyscale_on_board, set_led, clear_graph, start_animation, stop_animation, draw_matrix_on_board, reset_modules, WIDTH, HEIGHT, coordinates_to_matrix
+from framework_led_matrix.simulations.BihamMiddletonLevineTrafficModel import run_bml
+from framework_led_matrix.utils.anagrams import draw_anagram_on_matrix, anagrams, ensure_nltk_words
 # Note: 'words' corpus is imported inside anagrams.py or needs to be available
-from utils.text_rendering import draw_text_vertical
-from core.math_engine import MATH_OPERATIONS, pick_largest_graph
-from simulations.inner_totalistic import run_totalistic_ca
-from simulations.outer_totalistic import run_outer_totalistic_ca, game_of_life_rules, STARTING_STATES_GOF
+from framework_led_matrix.utils.text_rendering import draw_text_vertical
+from framework_led_matrix.core.math_engine import MATH_OPERATIONS, pick_largest_graph
+from framework_led_matrix.simulations.inner_totalistic import run_totalistic_ca
+from framework_led_matrix.simulations.outer_totalistic import run_outer_totalistic_ca, game_of_life_rules, STARTING_STATES_GOF
 from typing import List, Optional
-from simulations.HardyPomeauPazzis import run_hpp_simulation, create_hpp_board_np
+from framework_led_matrix.simulations.HardyPomeauPazzis import run_hpp_simulation, create_hpp_board_np
 import random
 import time
 import numpy as np
@@ -133,6 +133,7 @@ def random_greyscale_animation(animate: bool = True, duration_seconds: int = 10)
 
 def run_anagrams_game_of_life(word_limit: int = 4, generations: int = 100, delay_sec: float = 0.1, which: str = 'both'):
     log("runtime.py: run_anagrams_game_of_life() entry")
+    ensure_nltk_words()
     eligible_words = [word for word in words.words() if len(word) <= 7]
     actual_limit = min(word_limit, len(eligible_words))
     for word in random.sample(eligible_words, actual_limit):
@@ -151,6 +152,7 @@ def run_anagrams_game_of_life(word_limit: int = 4, generations: int = 100, delay
 
 def run_draw_anagram_on_matrix(word_limit: int = 3, which: str = 'both'):
     log("runtime.py: run_draw_anagram_on_matrix() entry")
+    ensure_nltk_words()
     eligible_words = [word for word in words.words() if len(word) <= 7]
     actual_limit = min(word_limit, len(eligible_words))
     for word in random.sample(eligible_words, actual_limit):
