@@ -22,12 +22,12 @@ This suite allows you to run a variety of visual experiments:
 
 ## Commands & Sub-arguments
 
-### [1] `background` (aliases: `bg`)
+### `background` (aliases: `bg`)
 Run the background runner (screensaver mode).
 
 ---
 
-### [2] `led`
+### `led`
 * `version`: Get firmware version from modules.
 * `clear`: Clear both displays (all LEDs OFF).
 * `fill`: 
@@ -39,7 +39,7 @@ Run the background runner (screensaver mode).
 
 ---
 
-### [3] `text`
+### `text`
 * **`vertical <text>`**
     * `--font-size <int>`: Force a specific font size (default: `auto`).
     * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
@@ -54,14 +54,14 @@ Run the background runner (screensaver mode).
 
 ---
 
-### [4] `anagram`
+### `anagram`
 * **`draw <word>`**
     * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
     * `--no-animate`: Disable animation between words.
 
 ---
 
-### [5] `sim`
+### `sim`
 * **`bml`**: Run Biham-Middleton-Levine traffic model (cars moving on a grid).
     * `--density <float>`: Car density 0.0 to 1.0 (default: `0.35`).
     * `--steps <int>`: Total half-steps to simulate (default: `500`).
@@ -118,7 +118,7 @@ Run the background runner (screensaver mode).
 
 ---
 
-### [6] `math`
+### `math`
 * **`plot <function>`**: Plot a function locally and on the matrix.
     * `<function>`: Predefined function: `sin`, `cos`, `tan`, `exp`, `log`, `tanh`, etc.
     * `--points <int>`: Number of points to plot (default: `500`).
