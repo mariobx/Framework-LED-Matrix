@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "framework-led-matrix"
-version = "0.1.0"
+name = "Framework-LED-Matrix"
+version = "0.1.1"
 authors = [
   { name = "mariobx" },
 ]
@@ -34,7 +34,7 @@ dependencies = [
 "Bug Tracker" = "https://github.com/mariobx/Framework-LED-Matrix/issues"
 
 [project.scripts]
-framework-led = "cli:main"
+frameworkled = "cli:main"
 
 [tool.setuptools]
 packages = ["framework_led_matrix", "framework_led_matrix.apps", "framework_led_matrix.core", "framework_led_matrix.simulations", "framework_led_matrix.utils"]

@@ -3,3 +3,4 @@ __pycache__/
 venv/
 framework_led_matrix.egg-info/
 dist/
+Framework_LED_Matrix.egg-info/
