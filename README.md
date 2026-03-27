@@ -1,42 +1,124 @@
-## LED Matrix Graph & Simulation Suite
-This project provides a comprehensive toolkit for rendering mathematical functions, complex cellular automata simulations, and text animations on a dual 34x9 LED matrix system. It includes a modular core for hardware communication, a suite of simulation engines (BML, HPP, GoL), and a robust CLI for local and remote visualization.
+# Framework 16 LED Matrix Modules
 
-# Workflow:
-  1. Initialize hardware modules (left/right) via serial PCI paths.
-  2. Select a mode: Math Plotting, CA Simulation, Text Rendering, or Anagram discovery.
-  3. (Math) Sample high-resolution functions (step 0.01) and map them to the 34x9 discrete grid.
-  4. (Simulation) Evolve cellular automata states using cellpylib and push frames to hardware.
-  5. (Background) Cycle through "scenes" indefinitely for a screensaver-like experience.
+I remember how surprised I was at the lack of tools for the LED matrix 16. I had gotten them knowing they were programmable and I could do cool things, yet no one yet has made a tool for them to do much (at least to my research).
 
-# Arguments:
-  - `led`: Basic hardware commands (version, clear, fill, start-anim, stop-anim, reset, ports).
-  - `text`: Render text on the matrix (vertical, horizontal) with customizable hold times and offsets.
-  - `anagram`: Find and draw anagrams for a target word on the matrix.
-  - `sim`: Run complex simulations:
-    - `gof`: Conway's Game of Life with named patterns (glider, acorn, etc.).
-    - `outer`: Custom Outer-Totalistic CA with B/S rules.
-    - `inner`: Custom Inner-Totalistic CA with NKS rule numbers.
-    - `bml`: Biham-Middleton-Levine traffic model (includes `bml-local` for Matplotlib).
-    - `hpp`: Hardy-Pomeau-Pazzis lattice gas (includes `hpp-math` for graph seeding).
-    - `random-grey`: Random greyscale noise generation.
-  - `math`: Plot predefined functions (sin, cos, exp, etc.) locally and on the matrix.
-  - `-v`, `--verbose`: Enable detailed logging for debugging hardware communication.
+This should allow programming novices to run cool simulations of their own on the Framework 16 LED matrix besides the simple boot animations.
 
-# Examples:
-  1. **Run a Game of Life "Diehard" pattern:** \
-  ./cli.py sim gof --board diehard --delay 0.05
+The `core/` directory defines the core API of the tool, such as creating a simpler way to interact with the defined LED functions, the path of the LEDs, sending of both greyscale and regular payloads, clearing the matricies, etc.
 
-  2. **Plot a sine wave locally and on the matrix:** \
-  ./cli.py math plot sin --points 1000
+This suite allows you to run a variety of visual experiments:
+* **Anagrams & Text:** Anagrams of random words gliding across the screen or custom text rendered vertically and horizontally.
+* **Cellular Automata:** Complex simulations including Conway’s Game of Life, the Biham-Middleton-Levine (BML) traffic model, and Hardy-Pomeau-Pazzis (HPP) lattice gas collisions.
+* **Mathematical Visualizations:** Plotting math functions like `sin`, `cos`, `exp`, and `tanh` directly onto the matrix.
+* **Hybrid Simulations:** Seeding Game of Life or HPP simulations using math function graphs or anagrammed text as the initial starting states.
+* **Noise & Hardware Effects:** Generating hardware-level greyscale noise and controlling internal hardware animations.
 
-  3. **Run the background screensaver mode with verbose logging:** \
-  ./cli.py -v background
+---
 
-  4. **Render horizontal scrolling text on the left module:** \
-  ./cli.py text horizontal "FRAMEWORK" --which left --x-offset 2
+## Global Options
+* `-v, --verbose`: Enable detailed verbose logging for all commands.
 
-  5. **Run a custom CA rule (Seeds) on the matrix:** \
-  ./cli.py sim outer --b-rule "2" --s-rule "" --steps 500
+---
 
-  6. **Discover anagrams for "binary" and render them:** \
-  ./cli.py anagram draw binary
+## Commands & Sub-arguments
+
+### [1] `background` (aliases: `bg`)
+Run the background runner (screensaver mode).
+
+---
+
+### [2] `led`
+* `version`: Get firmware version from modules.
+* `clear`: Clear both displays (all LEDs OFF).
+* `fill`: 
+    * `--hold <float>`: Seconds to hold the filled screen (default: `0`).
+* `start-anim`: Start hardware animation (e.g., fades).
+* `stop-anim`: Stop hardware animation.
+* `reset`: Clear display and stop animation.
+* `ports`: Show available serial ports (for debugging).
+
+---
+
+### [3] `text`
+* **`vertical <text>`**
+    * `--font-size <int>`: Force a specific font size (default: `auto`).
+    * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
+    * `--row-offset <int>`: Row offset from the top (default: `0`).
+    * `--hold <float>`: Seconds to hold the text on screen (default: `0`).
+* **`horizontal <text>`**
+    * `--font-size <int>`: Force a specific font size (default: `auto`).
+    * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
+    * `--x-offset <int>`: Horizontal scroll offset (default: `0`).
+    * `--y-offset <int>`: Vertical position offset (default: `centered`).
+    * `--hold <float>`: Seconds to hold the text on screen (default: `0`).
+
+---
+
+### [4] `anagram`
+* **`draw <word>`**
+    * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
+    * `--no-animate`: Disable animation between words.
+
+---
+
+### [5] `sim`
+* **`bml`**: Run Biham-Middleton-Levine traffic model (cars moving on a grid).
+    * `--density <float>`: Car density 0.0 to 1.0 (default: `0.35`).
+    * `--steps <int>`: Total half-steps to simulate (default: `500`).
+    * `--delay <float>`: Delay in seconds between frames (default: `0.05`).
+* **`bml-local`**: Run BML traffic model locally in a Matplotlib window.
+* **`hpp`**: Run Hardy-Pomeau-Pazzis lattice gas (particle collision simulation).
+    
+    * `--density <float>`: Particle density 0.0 to 1.0 (default: `0.5`).
+    * `--steps <int>`: Simulation steps (default: `500`).
+    * `--delay <float>`: Delay in seconds between frames (default: `0.05`).
+    * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
+* **`hpp-math`**: Run HPP simulation seeded with math function graphs as the initial state.
+    * `--density <float>`: Particle density 0.0 to 1.0 (default: `0.3`).
+    * `--steps <int>`: Simulation steps per graph (default: `500`).
+    * `--delay <float>`: Delay in seconds between frames (default: `0.05`).
+    * `--graphs <int>`: Number of math graphs to run (default: `5`).
+* **`outer`**: Run generic Outer-Totalistic CA using Birth/Survival rules.
+    * `--b-rule <list>`: Birth rule, comma-separated (e.g., `'3,6'`).
+    * `--s-rule <list>`: Survival rule, comma-separated (e.g., `'2,3'`).
+    * `--steps <int>`: Simulation steps (default: `200`).
+    * `--delay <float>`: Delay in seconds between frames (default: `0.1`).
+    * `--oscil-max <int>`: Steps to detect oscillation (default: `20`).
+    * `--still-max <int>`: Steps to detect still life (default: `10`).
+    * `--empty-max <int>`: Steps to detect empty board (default: `5`).
+* **`gof`**: Run Conway's Game of Life (B3/S23).
+    
+    * `--board <choice>`: Initial state: `random` or named pattern (`glider`, `acorn`, etc.).
+    * `--steps <int>`: Simulation steps (default: `200`).
+    * `--delay <float>`: Delay in seconds between frames (default: `0.1`).
+    * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
+* **`inner`**: Run Inner-Totalistic CA (Wolfram NKS style).
+    * `<rule> <int>`: The rule number (e.g., `777`).
+    * `--steps <int>`: Simulation steps (default: `200`).
+    * `--delay <float>`: Delay in seconds between frames (default: `0.1`).
+* **`random-grey`**: Display hardware-level greyscale noise.
+    * `--duration <int>`: Duration in seconds (default: `10`).
+    * `--no-animate`: Disable hardware animation (for pure noise).
+* **`anagram-gof`**: Finds anagrams for random words and uses the text as the Game of Life starting state.
+    * `--words <int>`: Number of random words to use (default: `4`).
+    * `--steps <int>`: GoL steps per anagram (default: `100`).
+    * `--delay <float>`: Delay in seconds between GoL frames (default: `0.1`).
+    * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
+* **`anagram-draw`**: Sequentially find and draw anagrams for random words.
+    * `--words <int>`: Number of random words to use (default: `3`).
+    * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
+* **`math-gof`**: Plot math graphs and use them as the Game of Life starting state.
+    * `--steps <int>`: GoL steps per graph (default: `100`).
+    * `--delay <float>`: Delay in seconds between GoL frames (default: `0.1`).
+* **`math-graphs`**: Show a cycling sequence of random math graphs.
+    * `--num <int>`: Number of graphs to show (default: `5`).
+    * `--delay <float>`: Delay in seconds between graphs (default: `2.0`).
+    * `--which <choice>`: Which module: `left`, `right`, `both` (default: `both`).
+    * `--hold <float>`: Seconds to hold the *final* graph on screen (default: `0`).
+
+---
+
+### [6] `math`
+* **`plot <function>`**: Plot a function locally and on the matrix.
+    * `<function>`: Predefined function: `sin`, `cos`, `tan`, `exp`, `log`, `tanh`, etc.
+    * `--points <int>`: Number of points to plot (default: `500`).
