@@ -196,8 +196,15 @@ def build_cli():
         action='store_true', 
         help='Enable detailed verbose logging for all commands.'
     )
+
+    # --- ADDED: Top-level test flag ---
+    parser.add_argument(
+        '--test',
+        action='store_true',
+        help='Run the built-in test suite to verify hardware and software.'
+    )
     
-    subparsers = parser.add_subparsers(dest='command', required=True, help='Main command category')
+    subparsers = parser.add_subparsers(dest='command', required=False, help='Main command category')
 
     # --- 0. Background Sub-parser ---
     subparsers.add_parser(
@@ -469,6 +476,16 @@ def main():
         return
 
     args = parser.parse_args()
+
+    # --- Handle --test flag from main() ---
+    if args.test:
+        run_tests()
+        return
+
+    # If --test wasn't given and no command was specified, print help
+    if not args.command:
+        parser.print_help()
+        return
 
     # --- Set verbose flag from new top-level argument ---
     log.verbose = args.verbose 
